@@ -6,6 +6,8 @@ import com.JWTAuth.JWTAuthApplicaiton.dtos.RegisterUserDto;
 import com.JWTAuth.JWTAuthApplicaiton.entities.User;
 import com.JWTAuth.JWTAuthApplicaiton.repositories.UserRepository;
 
+import jakarta.transaction.Transactional;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class AuthenticationService {
     private final UserRepository userRepository;
 
@@ -52,8 +55,5 @@ public class AuthenticationService {
                 .orElseThrow();
     }
 
-    public boolean checkEmailExists(String email){
-        return userRepository.existsByEmail(email);
-    }
 
 }
