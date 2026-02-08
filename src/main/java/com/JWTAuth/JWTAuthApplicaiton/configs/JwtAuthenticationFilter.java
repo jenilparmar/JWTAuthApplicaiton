@@ -100,7 +100,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 }
 
-
 @Configuration
 @EnableWebSecurity
 class SecurityConfiguration {
@@ -114,9 +113,11 @@ class SecurityConfiguration {
         this.authenticationProvider = authenticationProvider;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // ← ADD THIS LINE
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
@@ -130,18 +131,20 @@ class SecurityConfiguration {
 
         return http.build();
     }
+
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of("http://localhost:8005"));
-        configuration.setAllowedMethods(List.of("GET","POST"));
-        configuration.setAllowedHeaders(List.of("Authorization","Content-Type"));
+        configuration.setAllowedOrigins(List.of("http://localhost:3000", "https://hoppscotch.io")); // ← ADDED hoppscotch
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // ← ADDED OPTIONS
+        configuration.setAllowedHeaders(List.of("*")); // ← CHANGED to allow all headers
+        configuration.setAllowCredentials(true); // ← ADDED this
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-
-        source.registerCorsConfiguration("/**",configuration);
+        source.registerCorsConfiguration("/**", configuration);
 
         return source;
     }
+
 }

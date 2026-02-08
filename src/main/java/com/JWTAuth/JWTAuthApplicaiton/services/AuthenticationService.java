@@ -1,5 +1,6 @@
 package com.JWTAuth.JWTAuthApplicaiton.services;
 
+import com.JWTAuth.JWTAuthApplicaiton.controller.ResetPassword;
 import com.JWTAuth.JWTAuthApplicaiton.dtos.LoginUserDto;
 import com.JWTAuth.JWTAuthApplicaiton.dtos.RegisterUserDto;
 import com.JWTAuth.JWTAuthApplicaiton.entities.User;
@@ -9,6 +10,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AuthenticationService {
@@ -48,4 +51,9 @@ public class AuthenticationService {
         return userRepository.findByEmail(input.getEmail())
                 .orElseThrow();
     }
+
+    public boolean checkEmailExists(String email){
+        return userRepository.existsByEmail(email);
+    }
+
 }
