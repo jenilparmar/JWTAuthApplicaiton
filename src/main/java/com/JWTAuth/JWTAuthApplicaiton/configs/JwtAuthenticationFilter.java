@@ -136,7 +136,7 @@ class SecurityConfiguration {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of("http://localhost:3000", "https://hoppscotch.io",  "https://toxic-anetta-jenol-774c8457.koyeb.app","https://cnvrt-lab-danish-work.vercel.app")); // ← ADDED hoppscotch
+        configuration.setAllowedOrigins(List.of("http://localhost:8081", "https://hoppscotch.io", "https://social-hub-dashboard.vercel.app","https://jwt.visionary.gupta-kartik.xyz" ,"https://toxic-anetta-jenol-774c8457.koyeb.app","https://cnvrt-lab-danish-work.vercel.app")); // ← ADDED hoppscotch
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // ← ADDED OPTIONS
         configuration.setAllowedHeaders(List.of("*")); // ← CHANGED to allow all headers
         configuration.setAllowCredentials(true); // ← ADDED this

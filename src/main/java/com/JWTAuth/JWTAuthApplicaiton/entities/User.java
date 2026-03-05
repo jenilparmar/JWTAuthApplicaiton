@@ -9,18 +9,37 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users_write")
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(nullable = false)
-    private Long id;
+    private UUID id;
+    @Column(nullable = false)
+    private Boolean active = true;
+    public Boolean getActive() {
+        return active;
+    }
 
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
     @Column(nullable = false)
     private String fullName;
+
+    private String preference;
+
+    public String getPreference() {
+        return preference;
+    }
+
+    public void setPreference(String preference) {
+        this.preference = preference;
+    }
 
     @Column(unique = true, length = 100, nullable = false)
     private String email;
@@ -38,7 +57,7 @@ public class User implements UserDetails {
 
     /* ================= getters ================= */
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -57,7 +76,7 @@ public class User implements UserDetails {
 
     /* ================= fluent setters ================= */
 
-    public User setId(Long id) {
+    public User setId(UUID id) {
         this.id = id;
         return this;
     }
